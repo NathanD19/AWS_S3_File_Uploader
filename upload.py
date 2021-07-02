@@ -34,10 +34,18 @@ conn = boto.connect_s3(AWS_ACCESS_KEY_ID, AWS_ACCESS_KEY_SECRET)
 bucket = conn.get_bucket(bucket_name)
 
 # get last update time from file
-upload_time_f = open("upload_time.txt", "r+")
-# 2021-07-01 00:00:00.000000
-last_upload_time = datetime.strptime(upload_time_f.read(),
-                                     '%Y-%m-%d %H:%M:%S.%f')
+try:
+    upload_time_f = open("upload_time.txt", "r+")
+    last_upload_time = datetime.strptime(upload_time_f.read(),
+                                         '%Y-%m-%d %H:%M:%S.%f')
+except:
+    time = "1970-01-01 00:00:00.000000"
+    temp_f = open("upload_time.txt", "x")
+    temp_f.seek(0)
+    temp_f.write(time)
+    temp_f.truncate()
+    temp_f.close()
+    last_upload_time = datetime.strptime(time, '%Y-%m-%d %H:%M:%S.%f')
 
 print('Last upload time: ' + str(last_upload_time))
 sys.stdout.write('Searching for new files in... ')
