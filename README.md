@@ -1,5 +1,5 @@
 
-# AWS FILE UPLOADER
+# AWS S3 File Uploader
 
 File uploader that uploads data to AWS S3 bucket.
 
